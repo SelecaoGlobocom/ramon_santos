@@ -10,11 +10,11 @@ logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger('Comments-API')
 
 # PostgreSQL connection details
-db_host = os.environ.get('DB_HOST', 'your-db-host')
+db_host = os.environ.get('DB_HOST', '172.22.160.58')
 db_port = int(os.environ.get('DB_PORT', '5432'))
-db_name = os.environ.get('DB_NAME', 'your-db-name')
-db_user = os.environ.get('DB_USER', 'your-db-username')
-db_password = os.environ.get('DB_PASSWORD', 'your-db-password')
+db_name = os.environ.get('DB_NAME', 'comments')
+db_user = os.environ.get('DB_USER', 'comments')
+db_password = os.environ.get('DB_PASSWORD', 'comments')
 
 # Establish connection to PostgreSQL
 try:
