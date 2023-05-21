@@ -1,4 +1,4 @@
-resource "google_container_cluster" "primary" {
+resource "google_container_cluster" "comments" {
   project                 = var.project
   name                     = var.cluster_name
   location                 = var.default_zone
@@ -10,7 +10,7 @@ resource "google_container_cluster" "primary" {
 resource "google_container_node_pool" "primary_preemptible_nodes" {
   name       = var.pool_name
   location   = var.default_zone
-  cluster    = google_container_cluster.primary.name
+  cluster    = google_container_cluster.comments.name
   node_count = var.node_count
 
   node_config {

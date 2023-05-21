@@ -20,6 +20,8 @@ module "gke-cluster" {
   project = var.project
   cluster_name = var.cluster_name
   pool_name = var.pool_name
+
+  depends_on = [ module.vpc ]
 }
 
 module "comments-db" {
@@ -32,10 +34,27 @@ module "comments-db" {
   project = var.project
   db_pass = var.db_pass
   db_user = var.db_user
+
+  depends_on = [ module.vpc ]
 }
 
 module "artifact-registry" {
   source = "./modules/gcr"
-  repository_id = "comment-api_registry"
+  repository_id = "comment-api-registry"
   default_region = var.default_region
+}
+
+module "kubernetes" {
+  source = "./modules/kubernetes"
+  monitoring_namespace = var.monitoring_namespace
+  api_namespace = var.api_namespace
+
+  depends_on = [ module.gke-cluster ]
+}
+
+module "helm" {
+  source = "./modules/helm"
+  monitoring_namespace = module.kubernetes.monitoring_namespace
+
+  depends_on = [ module.kubernetes ]
 }

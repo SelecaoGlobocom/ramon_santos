@@ -21,10 +21,10 @@ resource "google_sql_database_instance" "instance" {
 
   settings {
     tier = var.db_instance_tier
-    backup_configuration {
-      enabled = true
-      start_time = "03:00"
-    }
+    # backup_configuration {
+    #   enabled = true
+    #   start_time = "03:00"
+    # }
     ip_configuration {
       ipv4_enabled                                  = false
       private_network                               = var.network

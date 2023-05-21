@@ -34,7 +34,7 @@ variable "database_version" {
 
 variable "db_instance_name" {
   type = string
-  default = "comments_db"
+  default = "comments-db"
 }
 
 variable "db_user" {
@@ -60,7 +60,7 @@ variable "subnet_name" {
 
 variable "vpc_name" {
   type = string
-  default = "comment-vpc"
+  default = "comment-test"
 }
 
 #### GKE Variables ####
@@ -77,4 +77,14 @@ variable "cluster_name" {
 variable "pool_name" {
   type    = string
   default = "desafio-pool"
+}
+
+variable "monitoring_namespace" {
+  type = string
+  default = "monitoring"
+}
+
+variable "api_namespace" {
+  type = string
+  default = "comment-api"
 }
