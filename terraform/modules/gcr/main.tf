@@ -2,10 +2,6 @@ resource "google_artifact_registry_repository" "comment-repo" {
   location      = var.default_region
   repository_id = var.repository_id
   format        = "DOCKER"
-
-  docker_config {
-    immutable_tags = false
-  }
 }
 
 resource "google_artifact_registry_repository_iam_member" "repo-iam" {

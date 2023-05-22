@@ -14,6 +14,10 @@ variable "network" {
   type    = string
 }
 
+variable "network_id" {
+  type    = string
+}
+
 variable "db_instance_tier" {
   type = string
 }

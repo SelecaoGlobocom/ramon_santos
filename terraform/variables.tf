@@ -45,14 +45,9 @@ variable "ip_cidr_range" {
   default = "10.0.0.0/16"
 }
 
-variable "subnet_name" {
-  type = string
-  default = "comment-subnet"
-}
-
 variable "vpc_name" {
   type = string
-  default = "comment-test"
+  default = "comment-network"
 }
 
 #### GKE Variables ####
@@ -81,9 +76,6 @@ variable "api_namespace" {
   default = "comment-api"
 }
 
-variable "DB_HOST" {
-  type = string
-}
 
 variable "DB_USER" {
   type = string

@@ -17,7 +17,7 @@ resource "kubernetes_secret" "comments-database" {
   }
 
   data = {
-    "DB_USER" = var.DB_HOST
+    "DB_USER" = var.DB_USER
     "DB_PASSWORD" = var.DB_PASS
     "DB_HOST" = var.DB_HOST
 

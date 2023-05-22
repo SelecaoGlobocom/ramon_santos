@@ -5,7 +5,6 @@ terraform {
 module "vpc" {
   source        = "./modules/vpc"
   vpc_name      = var.vpc_name
-  subnet_name   = var.subnet_name
   ip_cidr_range = var.ip_cidr_range
   project = var.project
 }
@@ -27,6 +26,7 @@ module "gke-cluster" {
 module "comments-db" {
   source = "./modules/database"
   network = module.vpc.id
+  network_id = module.vpc.vpc_network_name
   db_instance_name = var.db_instance_name
   database_version = var.database_version
   default_region = var.default_region
@@ -48,7 +48,7 @@ module "kubernetes" {
   source = "./modules/kubernetes"
   monitoring_namespace = var.monitoring_namespace
   api_namespace = var.api_namespace
-  DB_HOST = var.DB_HOST
+  DB_HOST = module.comments-db.db_ip
   DB_USER = var.DB_USER
   DB_PASS = var.DB_PASS
 

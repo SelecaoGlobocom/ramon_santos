@@ -12,6 +12,14 @@ resource "google_service_networking_connection" "private_vpc_connection" {
   reserved_peering_ranges = [google_compute_global_address.private_ip_address.name]
 }
 
+resource "google_compute_network_peering_routes_config" "peering_routes" {
+  peering = google_service_networking_connection.private_vpc_connection.peering
+  network = var.network_id
+
+  import_custom_routes = true
+  export_custom_routes = true
+}
+
 resource "google_sql_database_instance" "instance" {
   name             = var.db_instance_name
   database_version = var.database_version
@@ -31,7 +39,7 @@ resource "google_sql_database_instance" "instance" {
       ipv4_enabled                                  = false
       private_network                               = var.network
       enable_private_path_for_google_cloud_services = true
-      
+
     }
   }
 }

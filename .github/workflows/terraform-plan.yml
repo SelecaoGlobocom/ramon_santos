@@ -6,7 +6,7 @@ on:
 env:
   TF_VAR_credentials: ${{ secrets.TF_VAR_CREDENTIALS }}
   TF_VAR_DB_HOST: ${{ secrets.TF_VAR_DB_HOST }}
-  TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}
+  TF_VAR_DB_PASS: ${{ secrets.TF_VAR_DB_PASS }}
   TF_VAR_DB_USER: ${{ secrets.TF_VAR_DB_USER }}
     
 permissions:
@@ -36,7 +36,7 @@ jobs:
     - id: 'auth'
       uses: 'google-github-actions/auth@v0'
       with:
-        credentials_json: '${{ secrets.GCP_SA_KEY }}'
+        credentials_json: '${{ secrets.TF_VAR_CREDENTIALS }}'
         
 
     - name: Terraform Init
