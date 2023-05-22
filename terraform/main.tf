@@ -32,8 +32,8 @@ module "comments-db" {
   default_region = var.default_region
   db_instance_tier = var.db_instance_tier
   project = var.project
-  db_pass = var.db_pass
-  db_user = var.db_user
+  db_pass = var.DB_PASS
+  db_user = var.DB_USER
 
   depends_on = [ module.vpc ]
 }
@@ -48,6 +48,9 @@ module "kubernetes" {
   source = "./modules/kubernetes"
   monitoring_namespace = var.monitoring_namespace
   api_namespace = var.api_namespace
+  DB_HOST = var.DB_HOST
+  DB_USER = var.DB_USER
+  DB_PASS = var.DB_PASS
 
   depends_on = [ module.gke-cluster ]
 }

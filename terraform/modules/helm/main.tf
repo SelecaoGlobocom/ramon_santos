@@ -11,3 +11,36 @@ resource "helm_release" "grafana" {
   chart      = "grafana"
   namespace  = var.monitoring_namespace
 }
+
+resource "helm_release" "loki" {
+  name       = "loki"
+  repository = "https://grafana.github.io/helm-charts"
+  chart      = "loki"
+  version    = "5.5.2"
+  namespace = var.monitoring_namespace
+
+  values = [
+    "${file("loki-values.yaml")}"
+  ]
+
+  set {
+    name  = "promtail.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "loki.persistence.enabled"
+    value = "true"
+  }
+
+  set {
+    name  = "loki.persistence.size"
+    value = "10Gi"
+  }
+  
+  set {
+    name  = "loki.persistence.storageClassName"
+    value = "standard"
+  }
+
+}

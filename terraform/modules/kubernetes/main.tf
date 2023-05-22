@@ -10,14 +10,16 @@ resource "kubernetes_namespace" "monitoring" {
   }
 }
 
-resource "kubernetes_secret" "registry_credentials" {
+resource "kubernetes_secret" "comments-database" {
   metadata {
-    name      = "artifact-registry-credentials"
+    name      = "comments-secret"
     namespace = kubernetes_namespace.comment_api.metadata[0].name
   }
 
   data = {
-    "username" = "your-registry-username"
-    "password" = "your-registry-password"
+    "DB_USER" = var.DB_HOST
+    "DB_PASSWORD" = var.DB_PASS
+    "DB_HOST" = var.DB_HOST
+
   }
 }

@@ -19,22 +19,32 @@ resource "google_sql_database_instance" "instance" {
 
   depends_on = [google_service_networking_connection.private_vpc_connection]
 
+  deletion_protection  = "false"
+
   settings {
     tier = var.db_instance_tier
-    # backup_configuration {
-    #   enabled = true
-    #   start_time = "03:00"
-    # }
+    backup_configuration {
+      enabled = true
+      start_time = "03:00"
+    }
     ip_configuration {
       ipv4_enabled                                  = false
       private_network                               = var.network
       enable_private_path_for_google_cloud_services = true
+      
     }
   }
 }
+
 
 resource "google_sql_user" "users" {
   name     = var.db_user
   instance = google_sql_database_instance.instance.name
   password = var.db_pass
+}
+
+
+resource "google_sql_database" "comments-db" {
+  name     = "comments"
+  instance = google_sql_database_instance.instance.name
 }

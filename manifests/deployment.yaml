@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comments-api
+  labels:
+    app: comments-api
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: comments-api
+  template:
+    metadata:
+      labels:
+        app: comments-api
+    spec:
+      containers:
+      - name: comments-api
+        image: us-central1-docker.pkg.dev/sandbox-387113/comment-api-registry/comments-api:TAG_PLACEHOLDER
+        env:
+          - name: DB_HOST
+            valueFrom:
+              secretKeyRef:
+                name: comments-secret
+                key: DB_HOST
+          - name: DB_USER
+            valueFrom:
+              secretKeyRef:
+                name: comments-secret
+                key: DB_USER
+          - name: DB_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: comments-secret
+                key: DB_PASSWORD
+        ports:
+        - containerPort: 5000
+        readinessProbe:
+          httpGet:
+            path: /api/health
+            port: 5000
+          initialDelaySeconds: 10
+          periodSeconds: 5
+        livenessProbe:
+          httpGet:
+            path: /api/health
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10

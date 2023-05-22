@@ -1,0 +1,49 @@
+name: 'Terraform Apply'
+
+on:
+  workflow_dispatch:
+  
+env:
+  TF_VAR_credentials: ${{ secrets.TF_VAR_CREDENTIALS }}
+  TF_VAR_DB_HOST: ${{ secrets.TF_VAR_DB_HOST }}
+  TF_VAR_DB_PASSWORD: ${{ secrets.TF_VAR_DB_PASSWORD }}
+  TF_VAR_DB_USER: ${{ secrets.TF_VAR_DB_USER }}
+    
+permissions:
+  contents: read
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    environment: development
+
+    defaults:
+      run:
+        shell: bash
+
+    steps:
+
+    - name: Checkout
+      uses: actions/checkout@v3
+
+
+    - name: Setup Terraform
+      uses: hashicorp/setup-terraform@v2
+      with:
+        terraform_version: 1.1.7
+        
+    - id: 'auth'
+      uses: 'google-github-actions/auth@v0'
+      with:
+        credentials_json: '${{ secrets.GCP_SA_KEY }}'
+        
+
+    - name: Terraform Init
+      working-directory: terraform
+      run: terraform init
+    
+
+    - name: Terraform Apply
+      working-directory: terraform
+      run: terraform apply -auto-approve -input=false

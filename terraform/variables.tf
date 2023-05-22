@@ -37,14 +37,6 @@ variable "db_instance_name" {
   default = "comments-db"
 }
 
-variable "db_user" {
-  type = string
-}
-
-variable "db_pass" {
-  type = string
-}
-
 
 #### VPC Variables #### 
 
@@ -87,4 +79,16 @@ variable "monitoring_namespace" {
 variable "api_namespace" {
   type = string
   default = "comment-api"
+}
+
+variable "DB_HOST" {
+  type = string
+}
+
+variable "DB_USER" {
+  type = string
+}
+
+variable "DB_PASS" {
+  type = string
 }
